@@ -14,9 +14,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by rainday on 16/8/11.
- */
 @Service
 public class FollowService {
     @Autowired
@@ -103,7 +100,7 @@ public class FollowService {
     }
 
     /**
-     *  判断用户是否关注了某个实体
+     * 判断用户是否关注了某个实体
      * @param userId
      * @param entityType
      * @param entityId

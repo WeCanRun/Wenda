@@ -180,12 +180,12 @@ public class SensitiveService implements InitializingBean {
             logger.error("读取敏感词文件失败" + e.getMessage());
         }
     }
-/***
-    public static void main(String[] argv) {
+
+    /*public static void main(String[] argv) {
         SensitiveService s = new SensitiveService();
         s.addWord("色情");
         s.addWord("好色");
         System.out.print(s.filter("你好X色**情XX"));
-    }
- ***/
+    }*/
+
 }

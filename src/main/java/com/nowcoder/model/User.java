@@ -9,6 +9,9 @@ public class User {
     private String password;
     private String salt;
     private String headUrl;
+    private int active;
+    private String code;
+    private String email;
 
     public User() {
 
@@ -18,6 +21,33 @@ public class User {
         this.password = "";
         this.salt = "";
         this.headUrl = "";
+        this.active = 0;
+        this.code = "";
+        this.email ="";
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {

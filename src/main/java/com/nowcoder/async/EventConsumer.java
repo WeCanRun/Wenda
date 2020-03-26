@@ -15,16 +15,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
-/**
- * Created by nowcoder on 2016/7/30.
- */
 @Service
 public class EventConsumer implements InitializingBean, ApplicationContextAware {
+    private static final int nThreads = 5;
     private static final Logger logger = LoggerFactory.getLogger(EventConsumer.class);
     private Map<EventType, List<EventHandler>> config = new HashMap<EventType, List<EventHandler>>();
     private ApplicationContext applicationContext;
+
 
     @Autowired
     JedisAdapter jedisAdapter;
@@ -45,33 +46,38 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
             }
         }
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true) {
-                    String key = RedisKeyUtil.getEventQueueKey();
-                    List<String> events = jedisAdapter.brpop(0, key);
+        ExecutorService service = Executors.newFixedThreadPool(nThreads);
+        service.submit(() -> {
+            while(true) {
+                String key = RedisKeyUtil.getEventQueueKey();
+                        List<String> events = jedisAdapter.brpop(0, key);
 
-                    for (String message : events) {
-                        if (message.equals(key)) {
-                            continue;
-                        }
+                        for (String message : events) {
+                            if (message.equals(key)) {
+                                continue;
+                            }
 
-                        EventModel eventModel = JSON.parseObject(message, EventModel.class);
-                        if (!config.containsKey(eventModel.getType())) {
-                            logger.error("不能识别的事件");
-                            continue;
-                        }
+                            EventModel eventModel = JSON.parseObject(message, EventModel.class);
+                            if (!config.containsKey(eventModel.getType())) {
+                                logger.error("不能识别的事件");
+                                continue;
+                            }
 
-                        for (EventHandler handler : config.get(eventModel.getType())) {
-                            System.out.println("do hendler");
-                            handler.doHandle(eventModel);
-                        }
+                            for (EventHandler handler : config.get(eventModel.getType())) {
+                                // System.out.println("do hendler");
+                                handler.doHandle(eventModel);
                     }
                 }
             }
         });
-        thread.start();
+
+       /* Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
+        thread.start();*/
     }
 
     @Override

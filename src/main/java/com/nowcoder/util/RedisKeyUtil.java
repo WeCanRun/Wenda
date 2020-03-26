@@ -10,9 +10,17 @@ public class RedisKeyUtil {
     private static String BIZ_EVENTQUEUE = "EVENT_QUEUE";
     // 获取粉丝
     private static String BIZ_FOLLOWER = "FOLLOWER";
+
+
     // 关注对象
     private static String BIZ_FOLLOWEE = "FOLLOWEE";
     private static String BIZ_TIMELINE = "TIMELINE";
+
+    //激活时间
+    private static String BIZ_ACTIVE = "ACTIVE";
+
+    //修改密码
+    private static String BIZ_RESET = "RESET";
 
     public static String getLikeKey(int entityType, int entityId) {
         return BIZ_LIKE + SPLIT + String.valueOf(entityType) + SPLIT + String.valueOf(entityId);
@@ -38,5 +46,13 @@ public class RedisKeyUtil {
 
     public static String getTimelineKey(int userId) {
         return BIZ_TIMELINE + SPLIT + String.valueOf(userId);
+    }
+
+    public static String getActiveKey(int userId) {
+        return BIZ_ACTIVE + SPLIT + userId;
+    }
+
+    public static String getConfirmKey(String email) {
+        return BIZ_RESET + SPLIT + email;
     }
 }

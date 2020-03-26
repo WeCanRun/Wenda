@@ -16,9 +16,7 @@ import javax.mail.internet.MimeUtility;
 import java.util.Map;
 import java.util.Properties;
 
-/**
- * Created by nowcoder on 2016/7/15. // course@nowcoder.com NKnk66
- */
+
 @Service
 public class MailSender implements InitializingBean {
     private static final Logger logger = LoggerFactory.getLogger(MailSender.class);
@@ -30,8 +28,8 @@ public class MailSender implements InitializingBean {
     public boolean sendWithHTMLTemplate(String to, String subject,
                                         String template, Map<String, Object> model) {
         try {
-            String nick = MimeUtility.encodeText("牛客中级课");
-            InternetAddress from = new InternetAddress(nick + "<course@nowcoder.com>");
+            String nick = MimeUtility.encodeText("广大问答社区");
+            InternetAddress from = new InternetAddress(nick + "<1094124771@qq.com>");
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
             String result = VelocityEngineUtils
@@ -51,17 +49,17 @@ public class MailSender implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         mailSender = new JavaMailSenderImpl();
-        mailSender.setUsername("course@nowcoder.com");
-        mailSender.setPassword("NKnk123");
-        mailSender.setHost("smtp.exmail.qq.com");
-        //mailSender.setHost("smtp.qq.com");
+        mailSender.setUsername("1094124771@qq.com");
+        mailSender.setPassword("oswnljyhgibpjcih");
+        //mailSender.setHost("smtp.exmail.qq.com");
+        mailSender.setHost("smtp.qq.com");
         mailSender.setPort(465);
         mailSender.setProtocol("smtps");
         mailSender.setDefaultEncoding("utf8");
         Properties javaMailProperties = new Properties();
         javaMailProperties.put("mail.smtp.ssl.enable", true);
-        //javaMailProperties.put("mail.smtp.auth", true);
-        //javaMailProperties.put("mail.smtp.starttls.enable", true);
+        javaMailProperties.put("mail.smtp.auth", true);
+        javaMailProperties.put("mail.smtp.starttls.enable", true);
         mailSender.setJavaMailProperties(javaMailProperties);
     }
 }
