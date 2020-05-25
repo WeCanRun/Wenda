@@ -90,8 +90,8 @@
                     <div class="answer-head">
                         <div class="zm-item-answer-author-info">
                             <a class="zm-item-link-avatar avatar-link" href="" target="_blank" data-tip="p$t$yingxiaodao">
-                                <img src="${comment.user.headUrl}" class="zm-list-avatar avatar"></a>
-                            <a class="author-link" data-tip="p$t$yingxiaodao" target="_blank" href="">${comment.user.name}</a>
+                                <img src="$!{comment.user.getHeadUrl()}" class="zm-list-avatar avatar"></a>
+                            <a class="author-link" data-tip="p$t$yingxiaodao" target="_blank" href="">$!{comment.user.getName()}</a>
                         </div>
                         <div class="zm-item-vote-info">
                                 <span class="voters text">
@@ -110,7 +110,7 @@
                         <div class="zm-meta-panel">
                             <a itemprop="url" class="answer-data-link meta-item" target="_blank" href="">发布于 $data.format('yyyy-MM-dd HH:mm:ss', $comment.comment.createdDate)</a>
                             <a href="" name="addcomment" class="meta-item toggle-comment js-toggleCommentBox">
-                                <i class="z-icon-comment"></i>4 条评论</a>
+                                <i class="z-icon-comment"></i>$!{comment.comment.count} 条回复</a>
 
                             <button class="item-collapse js-collapse" style="transition: none;">
                                 <i class="z-icon-fold"></i>收起</button>

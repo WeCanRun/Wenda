@@ -83,7 +83,7 @@ public class LoginController {
                     return "redirect:" + next;
                 }
                 return "redirect:/";
-            } else {
+            } else { // 登录失败
                 model.addAttribute("msg", map.get("msg"));
                 return "login";
             }
@@ -97,13 +97,11 @@ public class LoginController {
     @RequestMapping(path = {"/active/"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String active(Model model, @RequestParam("actor") int actor,
                          @RequestParam("code") String code) {
-        User user = userService.getUser(actor);
         String key = RedisKeyUtil.getActiveKey(actor);
         String getCode = jedisAdapter.get(key);
         jedisAdapter.delete(key);
 
-        if (!user.getCode().equals(code) &&
-                user.getCode().equals(getCode)) {
+        if (!getCode.equals(code)) {
             userService.activeFail(actor);
             model.addAttribute("msg", "账户激活失败");
             return "login";
@@ -116,21 +114,37 @@ public class LoginController {
 
     }
 
+    /**
+     * 退出登录
+     * @param ticket
+     * @return
+     */
     @RequestMapping(path = {"/logout"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String logout(@CookieValue("ticket") String ticket) {
         userService.logout(ticket);
         return "login";
     }
 
+    /**
+     * 修改密码打开校验邮箱页面
+     * @return
+     */
     @RequestMapping(path = {"/check"}, method = {RequestMethod.GET})
     public String check() {
 
         return "check";
     }
 
+    /**
+     * 修改密码时校验邮箱
+     * @param model
+     * @param email
+     * @return
+     */
     @RequestMapping(path = {"/check"}, method = {RequestMethod.POST})
     public String reset(Model model, @RequestParam(value = "email") String email) {
         Map<String, String> map = userService.checkEmail(email);
+        // 邮箱校验没有错误
         if (!map.containsKey("msg")) {
             String confirm = UUID.randomUUID().toString().replaceAll("-", "");
             String key = RedisKeyUtil.getConfirmKey(email);
@@ -143,13 +157,19 @@ public class LoginController {
                     .setExt("confirm", confirm));
             model.addAttribute("msg", "请查看邮件并确认修改");
 
-            return "check";
+            return "login";
         }
         model.addAttribute("msg", map.get("msg"));
         return "check";
     }
 
-
+    /**
+     * 校验是否可以重置密码
+     * @param model
+     * @param email
+     * @param confirm
+     * @return
+     */
     @RequestMapping(path = {"/reset/"}, method = {RequestMethod.GET,RequestMethod.POST})
     public String reset(Model model, @RequestParam(value = "email") String email,
                         @RequestParam("confirm") String confirm) {
@@ -174,6 +194,15 @@ public class LoginController {
         return "check";
     }
 
+    /**
+     * 重置密码
+     * @param model
+     * @param password
+     * @param repassword
+     * @param email
+     * @param response
+     * @return
+     */
     @RequestMapping(path = {"/reset/password/"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String reset(Model model, @RequestParam("password") String password,
                         @RequestParam("repassword") String repassword,
@@ -190,8 +219,6 @@ public class LoginController {
 
                     response.addCookie(cookie);
                 }
-                //model.addAttribute("msg", "重置密码成功，现在可以用新密码登录了");
-
             } else {
                 model.addAttribute("msg", map.get("msg"));
             }
@@ -200,9 +227,7 @@ public class LoginController {
             model.addAttribute("msg", "重置密码失败");
             return "reset";
         }
-
         return "redirect:/";
     }
-
 
 }

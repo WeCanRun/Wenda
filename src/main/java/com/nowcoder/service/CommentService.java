@@ -44,4 +44,8 @@ public class CommentService {
     public Comment getCommentById(int id) {
         return commentDAO.getCommentById(id);
     }
+
+    public List<Comment> getCommentByUserId(int userId) {
+        return commentDAO.getCommentByUserId(userId);
+    }
 }

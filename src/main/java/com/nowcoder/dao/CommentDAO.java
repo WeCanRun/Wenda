@@ -3,6 +3,7 @@ package com.nowcoder.dao;
 import com.nowcoder.model.Comment;
 import com.nowcoder.model.Question;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -34,4 +35,7 @@ public interface CommentDAO {
 
     @Select({"select count(id) from ", TABLE_NAME, " where user_id=#{userId}"})
     int getUserCommentCount(int userId);
+
+    @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, "where user_id = #{userId}"})
+    List<Comment> getCommentByUserId(int userId);
 }

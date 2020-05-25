@@ -34,12 +34,16 @@ public class RedisKeyUtil {
         return BIZ_EVENTQUEUE;
     }
 
-    // 某个实体的粉丝key
+    /**
+     *  某个实体的粉丝key
+     */
     public static String getFollowerKey(int entityType, int entityId) {
         return BIZ_FOLLOWER + SPLIT + String.valueOf(entityType) + SPLIT + String.valueOf(entityId);
     }
 
-    // 每个用户对某类实体的关注key
+    /**
+     *  每个用户对某类实体的关注key
+     */
     public static String getFolloweeKey(int userId, int entityType) {
         return BIZ_FOLLOWEE + SPLIT + String.valueOf(userId) + SPLIT + String.valueOf(entityType);
     }

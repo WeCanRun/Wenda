@@ -62,6 +62,7 @@ public class QuestionController {
 
             vo.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getId()));
             vo.set("user", userService.getUser(comment.getUserId()));
+            vo.set("count", commentService.getCommentCount(comment.getUserId(), EntityType.ENTITY_COMMENT));
             comments.add(vo);
         }
 

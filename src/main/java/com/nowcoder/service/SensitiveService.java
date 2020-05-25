@@ -18,9 +18,7 @@ public class SensitiveService implements InitializingBean {
 
     private static final Logger logger = LoggerFactory.getLogger(SensitiveService.class);
 
-    /**
-     * 默认敏感词替换符
-     */
+
     private static final String DEFAULT_REPLACEMENT = "***";
 
 

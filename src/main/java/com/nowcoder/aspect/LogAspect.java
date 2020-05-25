@@ -10,9 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-/**
- * Created by nowcoder on 2016/7/10.
- */
 @Aspect
 @Component
 public class LogAspect {
@@ -29,7 +26,7 @@ public class LogAspect {
         logger.info("before method:" + sb.toString());
     }
 
-    @After("execution(* com.nowcoder.controller.IndexController.*(..))")
+    @After("execution(* com.nowcoder.controller.HomeController.*(..))")
     public void afterMethod() {
         logger.info("after method" + new Date());
     }
