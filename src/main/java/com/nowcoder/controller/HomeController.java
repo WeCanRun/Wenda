@@ -58,6 +58,13 @@ public class HomeController {
         return "index";
     }
 
+    @RequestMapping(path = {"/more"}, method = {RequestMethod.GET, RequestMethod.POST})
+    public String more(Model model,
+                        @RequestParam(value = "begin", defaultValue = "0") int begin) {
+        model.addAttribute("vos", getQuestions(0, 0, begin + 10));
+        return "index";
+    }
+
     @RequestMapping(path = {"/user/{userId}"}, method = {RequestMethod.GET, RequestMethod.POST})
     public String userIndex(Model model, @PathVariable("userId") int userId) {
         model.addAttribute("vos", getQuestions(userId, 0, 10));

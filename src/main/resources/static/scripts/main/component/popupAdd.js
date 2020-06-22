@@ -56,7 +56,7 @@ var oPopupAdd = new PopupAdd({
         var bSubmit = false;
         var oPopup = new Popup({
             width: 540,
-            title: '提问',
+            title: '发帖',
             okTxt: '发布',
             content: oAdd.html(),
             ok: function () {

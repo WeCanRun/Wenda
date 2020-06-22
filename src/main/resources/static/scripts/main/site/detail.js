@@ -63,3 +63,10 @@
     }
 
 })(window);
+
+function more() {
+    // 已有帖子个数
+    var len = document.getElementsByClassName('feed-item folding feed-item-hook feed-item-2').length
+    console.log("len: " + len)
+    window.location.href = '/more?begin=' + len
+}

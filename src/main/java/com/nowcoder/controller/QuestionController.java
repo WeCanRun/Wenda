@@ -102,7 +102,7 @@ public class QuestionController {
             question.setTitle(title);
             if (hostHolder.getUser() == null) {
                 question.setUserId(WendaUtil.ANONYMOUS_USERID);
-                // return WendaUtil.getJSONString(999);
+                 return WendaUtil.getJSONString(999);
             } else {
                 question.setUserId(hostHolder.getUser().getId());
             }

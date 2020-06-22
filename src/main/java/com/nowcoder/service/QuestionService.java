@@ -41,4 +41,9 @@ public class QuestionService {
     public List<Question> getQuestionsByUserId(int userId) {
         return questionDAO.getQuestionsByUserId(userId);
     }
+
+    public List<Question> getQuestionByKeyWord(String keyword) {
+        String queryKeyword = "%" + keyword + "%";
+        return questionDAO.getQuestionsByKeyWord(queryKeyword);
+    }
 }

@@ -30,4 +30,7 @@ public interface QuestionDAO {
 
     @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where user_id = #{userId}"})
     List<Question> getQuestionsByUserId(int userId);
+
+    @Select({"select ", SELECT_FIELDS, " from", TABLE_NAME, "where title like #{keyword} or content like #{keyword}"})
+    List<Question> getQuestionsByKeyWord(String keyword);
 }

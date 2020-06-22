@@ -36,8 +36,10 @@ public class SearchController {
                          @RequestParam(value = "offset", defaultValue = "0") int offset,
                          @RequestParam(value = "count", defaultValue = "10") int count) {
         try {
-            List<Question> questionList = searchService.searchQuestion(keyword, offset, count,
-                    "<em>", "</em>");
+//            List<Question> questionList = searchService.searchQuestion(keyword, offset, count,
+//                    "<em>", "</em>");
+            List<Question> questionList = questionService.getQuestionByKeyWord(keyword);
+            logger.info("questionList: " + questionList);
             List<ViewObject> vos = new ArrayList<>();
             for (Question question : questionList) {
                 Question q = questionService.getById(question.getId());
@@ -54,16 +56,14 @@ public class SearchController {
                 vos.add(vo);
             }
 
-            /*
-            System.out.println(vos == null);
-            System.out.println(vos.size());
-            */
+            logger.info("vos: " + vos);
+            logger.info("keyword: " + keyword);
 
             model.addAttribute("vos", vos);
             model.addAttribute("keyword", keyword);
         } catch (Exception e) {
             logger.error("搜索评论失败:" + e.getMessage());
         }
-        return "result";
+        return "index";
     }
 }
